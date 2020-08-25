@@ -299,9 +299,14 @@ class SJSegmentView: UIScrollView {
 				                                        font: font!)
 			}
 
-			if width > maxWidth {
-				maxWidth = width
+						if width > maxWidth {
+                if width > UIScreen.main.bounds.width {
+                    maxWidth = UIScreen.main.bounds.width
+                } else {
+                    maxWidth = width
+                }
 			}
+
 		}
 
 		let width = Int(maxWidth + segmentViewOffsetWidth)
