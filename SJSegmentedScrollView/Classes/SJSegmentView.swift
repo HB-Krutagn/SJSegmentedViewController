@@ -284,7 +284,41 @@ class SJSegmentView: UIScrollView {
 
         return segmentTab!
     }
+	//Added this
+	func widthForSegment(_ frame: CGRect) -> CGFloat {
 
+		var maxWidth: CGFloat = 0
+		for controller in controllers! {
+
+			var width: CGFloat = 0.0
+			if let view = controller.navigationItem.titleView {
+				width = view.bounds.width
+                segmentViewOffsetWidth = 0.0
+			} else if let title = controller.title {
+
+				width = title.widthWithConstrainedWidth(.greatestFiniteMagnitude,
+				                                        font: font!)
+			}
+
+			if width > maxWidth {
+				maxWidth = width
+			}
+		}
+
+		let width = Int(maxWidth + segmentViewOffsetWidth)
+		let totalWidth = width * (controllers?.count)!
+		if totalWidth < Int(frame.size.width)  {
+			maxWidth = frame.size.width /  CGFloat((controllers?.count)!)
+		} else {
+			maxWidth = CGFloat(width)
+		}
+
+		return maxWidth
+	}
+	
+	
+	//Removed this
+/*
 	func widthForSegment(_ frame: CGRect) -> CGFloat {
 
 		var maxWidth: CGFloat = 0
@@ -319,6 +353,7 @@ class SJSegmentView: UIScrollView {
 
 		return maxWidth
 	}
+*/
     
 	override func observeValue(forKeyPath keyPath: String?,
 	                           of object: Any?,
